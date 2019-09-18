@@ -1,0 +1,103 @@
+enable
+configure terminal
+hostname SW-01
+banner motd "ACESSO APENAS PARA PESSOAS AUTORIZADAS!"
+enable secret SenhadaEnable
+ip domain-name peachanddaisy.local
+crypto key generate rsa general-keys modulus 1024
+username Cleiton privilege 15 secret Cleiton@15
+username Wanderson privilege 15 secret Wanderson@15
+username Fernando  privilege 15 secret Fernando@15
+username Guilherme privilege 15 secret Guilherme@15
+username Henrique privilege 15 secret Henrique@15
+line console 0
+login local
+exit
+line vty 0 15
+password SenhadaVTY
+transport input ssh
+exec-timeout 10
+login local
+exit
+service password-encryption
+vlan 10
+name RH
+exit
+vlan 20
+name Qualidade
+exit
+vlan 30
+name Recepcao
+exit
+vlan 40
+name Consultores
+exit
+vlan 50
+name Analistas
+exit
+vlan 60
+name TI
+exit
+vlan 70
+name Administracao
+exit
+vlan 80
+name VOZ
+exit
+vlan 90
+name Financas
+exit
+vlan 99
+name nativa
+exit
+interface f0/1
+switchport mode access
+switchport access vlan 10
+exit
+interface f0/2
+switchport mode access
+switchport access vlan 20
+exit
+interface f0/3
+switchport mode access
+switchport access vlan 30
+exit
+interface f0/4
+switchport mode access
+switchport access vlan 40
+exit
+interface f0/5
+switchport mode access
+switchport access vlan 50
+exit
+interface f0/6
+switchport mode access
+switchport access vlan 60
+exit
+interface f0/7
+switchport mode access
+switchport access vlan 70
+exit
+interface f0/8
+switchport mode access
+switchport access vlan 80
+exit
+interface f0/9
+switchport mode access
+switchport access vlan 90
+exit
+interface g0/1
+switchport mode access
+switchport access vlan 99
+exit
+interface g0/2
+switchport mode trunk
+switchport trunk native vlan 99
+switchport trunk allowed vlan 10,20,30,40,50,60,70,80,90,99
+exit
+interface vlan 99
+ip address 172.16.20.45 255.255.255.240
+description REDE 172.16.20.32
+no shutdown
+ip default-gateway 172.16.20.33
+do wr
